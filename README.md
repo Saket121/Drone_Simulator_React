@@ -1,3 +1,5 @@
+Use the master branch to see the code.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
