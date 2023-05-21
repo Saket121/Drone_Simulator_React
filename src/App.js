@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from 'react';
+import MapComponent from './MapComponent';
+import FormComponent from './FormComponent';
+import DroneComponent from './DroneComponent';
 
-function App() {
+const App = () => {
+  const [simulationData, setSimulationData] = useState(null);
+  const [isSimulationPaused, setIsSimulationPaused] = useState(false);
+  const intervalRef = useRef(null);
+
+  const handleSimulate = (data) => {
+    setSimulationData(data);
+    setIsSimulationPaused(false);
+  };
+
+  const handlePauseResume = () => {
+    setIsSimulationPaused((prevState) => !prevState);
+  };
+
+  const handleStop = () => {
+    clearInterval(intervalRef.current);
+    setSimulationData(null);
+    setIsSimulationPaused(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <MapComponent />
+      <FormComponent onSimulate={handleSimulate} />
+      {simulationData && (
+        <div>
+          <DroneComponent
+            latitude={simulationData.latitude}
+            longitude={simulationData.longitude}
+            time={simulationData.time}
+            isPaused={isSimulationPaused}
+            onPauseResume={handlePauseResume}
+            onStop={handleStop}
+          />
+          <button onClick={handlePauseResume}>{isSimulationPaused ? 'Resume' : 'Pause'}</button>
+          <button onClick={handleStop}>Stop</button>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
