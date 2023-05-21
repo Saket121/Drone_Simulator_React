@@ -1,3 +1,6 @@
+/* Use the master branch to view the code. */
+
+
 # Drone_Simulator_React
 This is a web application that simulates drone motion on a map based on user-provided information. It uses the Google Maps API to display the map and simulate the drone's movement.
 
